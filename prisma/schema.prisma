@@ -1,0 +1,86 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String
+  createdAt  DateTime @default(now())
+  feedbacks  Feedback[]
+  checklists Checklist[]
+
+  @@map("users")
+}
+
+model Feedback {
+  id        String     @id @default(uuid())
+  user      User       @relation(fields: [userId], references: [id])
+  userId    String
+  title     String
+  content   String?
+  cause     String?
+  solution  String?
+  createdAt DateTime   @default(now())
+  categories FeedbackCategory[]
+  inspections Inspection[]
+
+  @@map("feedbacks")
+}
+
+model Category {
+  id         String              @id @default(uuid())
+  title      String
+  feedbacks  FeedbackCategory[]
+  checklists Checklist[]
+
+  @@map("categories")
+}
+
+model FeedbackCategory {
+  feedback   Feedback @relation(fields: [feedbackId], references: [id])
+  feedbackId String
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+
+  @@id([feedbackId, categoryId])
+
+  @@map("feedbacks_categories")
+}
+
+model Checklist {
+  id         String      @id @default(uuid())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String
+  title      String
+  category   Category?   @relation(fields: [categoryId], references: [id])
+  categoryId String?
+  forDate    DateTime
+  createdAt  DateTime    @default(now())
+  inspections Inspection[]
+
+  @@map("checklists")
+}
+
+model Inspection {
+  id           String     @id @default(uuid())
+  checklist    Checklist  @relation(fields: [checklistId], references: [id])
+  checklistId  String
+  feedback     Feedback   @relation(fields: [feedbackId], references: [id])
+  feedbackId   String
+  result       Boolean
+  note         String?
+  createdAt    DateTime   @default(now())
+
+  @@unique([checklistId, feedbackId])
+
+  @@map("inspections")
+}

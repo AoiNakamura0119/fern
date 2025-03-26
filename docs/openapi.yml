@@ -1,0 +1,376 @@
+openapi: 3.0.0
+info:
+  title: MyApp API
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserArray'
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    patch:
+      summary: Update a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      summary: Delete a user
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted successfully
+
+  /feedbacks:
+    get:
+      summary: Get all feedbacks
+      responses:
+        '200':
+          description: List of feedbacks
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedbackArray'
+    post:
+      summary: Create feedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '201':
+          description: Created feedback
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+    patch:
+      summary: Update feedback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '200':
+          description: Updated feedback
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Feedback'
+    delete:
+      summary: Delete feedback
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted successfully
+
+  /categories:
+    get:
+      summary: Get all categories
+      responses:
+        '200':
+          description: List of categories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CategoryArray'
+    post:
+      summary: Create category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Created category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+    patch:
+      summary: Update category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '200':
+          description: Updated category
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+    delete:
+      summary: Delete category
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted successfully
+
+  /checklists:
+    get:
+      summary: Get all checklists
+      responses:
+        '200':
+          description: List of checklists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChecklistArray'
+    post:
+      summary: Create checklist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Checklist'
+      responses:
+        '201':
+          description: Created checklist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checklist'
+    patch:
+      summary: Update checklist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Checklist'
+      responses:
+        '200':
+          description: Updated checklist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Checklist'
+    delete:
+      summary: Delete checklist
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted successfully
+
+  /inspections:
+    get:
+      summary: Get all inspections
+      responses:
+        '200':
+          description: List of inspections
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InspectionArray'
+    post:
+      summary: Create inspection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inspection'
+      responses:
+        '201':
+          description: Created inspection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inspection'
+    patch:
+      summary: Update inspection
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inspection'
+      responses:
+        '200':
+          description: Updated inspection
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inspection'
+    delete:
+      summary: Delete inspection
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted successfully
+
+components:
+  schemas:
+    User:
+      type: object
+      required: [id, name, email, createdAt]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    UserCreate:
+      type: object
+      required: [name, email]
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+    UserArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+    Feedback:
+      type: object
+      required: [id, userId, title, createdAt]
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+          nullable: true
+        cause:
+          type: string
+          nullable: true
+        solution:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+    FeedbackArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Feedback'
+    Category:
+      type: object
+      required: [id, title]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+    CategoryArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Category'
+    Checklist:
+      type: object
+      required: [id, userId, title, forDate, createdAt]
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        title:
+          type: string
+        categoryId:
+          type: string
+          nullable: true
+        forDate:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+    ChecklistArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Checklist'
+    Inspection:
+      type: object
+      required: [id, checklistId, feedbackId, result, createdAt]
+      properties:
+        id:
+          type: string
+        checklistId:
+          type: string
+        feedbackId:
+          type: string
+        result:
+          type: boolean
+        note:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+    InspectionArray:
+      type: array
+      items:
+        $ref: '#/components/schemas/Inspection'

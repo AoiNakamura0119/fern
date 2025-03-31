@@ -14,7 +14,7 @@ app.put('/users/:id', userHandler.update);
 app.delete('/users/:id', userHandler.delete);
 
 app.get('/feedbacks', auth, feedbackHandler.gets);
-app.post('/feedbacks', feedbackHandler.post);
+app.post('/feedbacks', auth, feedbackHandler.post);
 app.put('/feedbacks/:id', feedbackHandler.update);
 app.delete('/feedbacks/:id', feedbackHandler.delete);
 

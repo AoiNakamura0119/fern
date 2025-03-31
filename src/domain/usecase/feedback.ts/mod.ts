@@ -12,13 +12,12 @@ export const getFeedbackUsecase = (repo: FeedbackRepository) => async (user_id: 
 };
 
 export const createFeedbackUsecase = (repo: FeedbackRepository) => async (input: {
-    userId: string;
     title: string;
     content?: string;
     cause?: string;
     solution?: string;
-}) => {
-    const feedback = createFeedback(input);
+}, user_id: string) => {
+    const feedback = createFeedback(input, user_id);
     await repo.post(feedback);
     return feedback;
 };

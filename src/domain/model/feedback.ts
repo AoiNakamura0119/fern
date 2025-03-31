@@ -9,16 +9,15 @@ export type Feedback = {
 };
 
 export const createFeedback = (input: {
-    userId: string;
     title: string;
     content?: string;
     cause?: string;
     solution?: string;
-}): Feedback => {
+}, user_id: string): Feedback => {
     if (!input.title) throw new Error('タイトルは必須です');
     return {
         id: crypto.randomUUID(),
-        userId: input.userId,
+        userId: user_id,
         title: input.title,
         content: input.content || null,
         cause: input.cause || null,

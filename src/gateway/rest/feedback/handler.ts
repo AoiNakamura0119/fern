@@ -20,7 +20,8 @@ export const feedbackHandler = {
 
     post: async (req: any, res: any) => {
         try {
-            const feedback = await createFeedback(req.body);
+            console.log(req.user.sub)
+            const feedback = await createFeedback(req.body, req.user.sub);
             res.status(201).json(feedback);
         } catch (e: any) {
             res.status(400).json({ error: e.message });
@@ -30,8 +31,8 @@ export const feedbackHandler = {
     update: async (req: any, res: any) => {
         try {
             const { id } = req.params;
-            const feedback = await updateFeedback({ id, ...req.body });
-            res.status(200).json(feedback);
+            // const feedback = await updateFeedback({ id, ...req.body });
+            res.status(200).json();
         } catch (e: any) {
             res.status(400).json({ error: e.message });
         }

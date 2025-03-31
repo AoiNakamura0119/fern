@@ -5,11 +5,11 @@ import { faker } from '@faker-js/faker';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Seeding 2224340e-05e1-4deb-9542-a67540a39a44 用データを作成中...');
+  console.log('🌱 Seeding 204e3604-4ed5-405b-9a5e-25b872b388d5 用データを作成中...');
 
   // 🎯 対象ユーザー取得
   const targetUser = await prisma.user.findUnique({
-    where: { id: '2224340e-05e1-4deb-9542-a67540a39a44' }
+    where: { id: '204e3604-4ed5-405b-9a5e-25b872b388d5' }
   });
 
   if (!targetUser) {
@@ -29,7 +29,7 @@ async function main() {
 
   // 🎯 フィードバックを5件作成
   const feedbacksData = Array.from({ length: 5 }).map((_, i) => ({
-    id: `fb-user-${i}`,
+    id: faker.string.uuid(),
     userId: targetUser.id,
     title: `user@example.com のフィードバック #${i + 1}`,
     content: faker.lorem.sentences(2),
@@ -41,7 +41,7 @@ async function main() {
 
   // 🎯 チェックリストを2件作成
   const checklistsData = Array.from({ length: 2 }).map((_, i) => ({
-    id: `cl-user-${i}`,
+    id: faker.string.uuid(),
     userId: targetUser.id,
     title: `user@example.com のチェックリスト #${i + 1}`,
     categoryId: category.id,

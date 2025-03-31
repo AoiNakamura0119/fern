@@ -9,7 +9,9 @@ const deleteFeedback = deleteFeedbackUsecase(FeedbackRepositoryPrisma);
 export const feedbackHandler = {
     gets: async (req: any, res: any) => {
         try {
-            const feedbacks = await getFeedbacks();
+            console.log("アクセス!!!")
+            const feedbacks = await getFeedbacks(req.user.sub);
+            console.log("feedbacks:", feedbacks)
             res.status(200).json(feedbacks);
         } catch (e: any) {
             res.status(500).json({ error: e.message });

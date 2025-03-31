@@ -1,8 +1,5 @@
 import { createUser, User } from '../../model/user';
 
-// get.tsというファイル名の変更
-
-// ✅ ユースケースが自分の中でインターフェースを定義
 export interface UserRepository {
     gets(): Promise<User[]>;
     post(user: User): Promise<void>;
@@ -15,11 +12,13 @@ export const getUsersUsecase = (repo: UserRepository) => async () => {
     return await repo.gets();
 };
 
-export const createUserUsecase = (repo: UserRepository) => async (input: {
-    name: string;
-    email: string;
-}) => {
-    const user = createUser(input.name, input.email);
+export const createUserUsecase = (repo: UserRepository) => async (
+    id: string,
+    name: string,
+    email: string,
+) => {
+    console.log("createUserUsecase: ", "id:", id, "name:", name, "email:", email)
+    const user = createUser(id, name, email);
     await repo.post(user);
     return user;
 };

@@ -1,5 +1,6 @@
 import { createUserUsecase, deleteUserUsecase, getUsersUsecase, updateUserUsecase } from "../../../domain/usecase/user/mod";
 import { userRepositoryPrisma } from "../../rdb/user/repository";
+import { createAccount } from "../../service/auth/mod";
 
 
 const getUsers = getUsersUsecase(userRepositoryPrisma);
@@ -20,9 +21,17 @@ export const userHandler = {
     post: async (req: any, res: any) => {
         console.log(req.body)
         try {
-            const user = await createUser(req.body);
-            res.status(201).json(user);
+            const new_account = await createAccount(req.body.email, req.body.password)
+            if (new_account) {
+                console.log("new_account:", new_account)
+                const user = await createUser(new_account.id, req.body.name, new_account.email);
+                console.log("user:", user)
+                res.status(201).json(user);
+            } else {
+                throw Error("error")
+            }
         } catch (e: any) {
+            console.error("errordfnapouvbap:", e)
             res.status(400).json({ error: e.message });
         }
     },

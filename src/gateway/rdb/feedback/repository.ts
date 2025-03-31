@@ -4,8 +4,8 @@ import prisma from "../../../lib/prisma";
 
 
 export const FeedbackRepositoryPrisma: FeedbackRepository = {
-    async gets(): Promise<Feedback[]> {
-        return await prisma.feedback.findMany();
+    async gets(user_id: string): Promise<Feedback[]> {
+        return await prisma.feedback.findMany({where: {userId: user_id}});
     },
     async post(feedback: Feedback): Promise<void> {
         await prisma.feedback.create({

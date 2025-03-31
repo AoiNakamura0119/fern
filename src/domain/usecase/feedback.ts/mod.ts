@@ -1,14 +1,14 @@
 import { Feedback, createFeedback } from '../../model/feedback';
 
 export interface FeedbackRepository {
-    gets(): Promise<Feedback[]>;
+    gets(user_id: string): Promise<Feedback[]>;
     post(feedback: Feedback): Promise<void>;
     update(user: Feedback): Promise<void>;
     delete(id: string): Promise<void>;
 }
 
-export const getFeedbackUsecase = (repo: FeedbackRepository) => async () => {
-    return await repo.gets();
+export const getFeedbackUsecase = (repo: FeedbackRepository) => async (user_id: string) => {
+    return await repo.gets(user_id);
 };
 
 export const createFeedbackUsecase = (repo: FeedbackRepository) => async (input: {
